@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="day_card_background_shape_content_description">day card shape</string>
 </resources>
