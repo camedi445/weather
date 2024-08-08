@@ -58,7 +58,7 @@ data class ConditionDto(
 )
 
 data class ForecastDto(
-    val forecastDay: List<ForecastDayDto>
+    val forecastday: List<ForecastDayDto>
 )
 
 data class ForecastDayDto(

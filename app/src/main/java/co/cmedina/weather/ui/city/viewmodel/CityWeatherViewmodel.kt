@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import co.cmedina.weather.di.IODispatcher
 import co.cmedina.weather.domain.model.CityWeather
 import co.cmedina.weather.domain.usecase.GetCityWeatherUseCase
+import co.cmedina.weather.ui.city.state.CityState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +20,14 @@ class CityWeatherViewmodel @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _cityWeather: MutableStateFlow<CityWeather?> = MutableStateFlow(null)
+    private val _cityWeather: MutableStateFlow<CityState> = MutableStateFlow(CityState())
     val cityWeather = _cityWeather.asStateFlow()
 
     fun getCityWeather(cityName: String) {
+        _cityWeather.update { it.copy(isLoading = true) }
         viewModelScope.launch(dispatcher) {
             getCityWeatherUseCase.invoke(cityName).also { data ->
-                _cityWeather.update { data }
+                _cityWeather.update { it.copy(isLoading = false, cityWeather = data) }
             }
         }
     }

@@ -12,13 +12,16 @@ import androidx.compose.ui.unit.dp
 import co.cmedina.weather.ui.theme.WeatherTheme
 
 @Composable
-fun CityTitle() {
+fun CityTitle(
+    cityName: String,
+    hour: String
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(24.dp)
     ) {
-        Text(text = "Medellín", style = MaterialTheme.typography.titleMedium)
-        Text(text = "17:45 PM")
+        Text(text = cityName, style = MaterialTheme.typography.titleMedium)
+        Text(text = hour)
     }
 }
 
@@ -26,6 +29,6 @@ fun CityTitle() {
 @Preview(showBackground = true)
 fun CityTitlePreview() {
     WeatherTheme {
-        CityTitle()
+        CityTitle("Medellín", " 17:50")
     }
 }

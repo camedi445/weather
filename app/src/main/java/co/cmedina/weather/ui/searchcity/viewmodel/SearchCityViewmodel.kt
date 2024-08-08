@@ -3,8 +3,8 @@ package co.cmedina.weather.ui.searchcity.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.cmedina.weather.di.IODispatcher
-import co.cmedina.weather.domain.model.City
 import co.cmedina.weather.domain.usecase.GetCityByNameUseCase
+import co.cmedina.weather.ui.searchcity.state.SearchCityState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +19,14 @@ class SearchCityViewmodel @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _cityList: MutableStateFlow<List<City>> = MutableStateFlow(emptyList())
-    val cityList = _cityList.asStateFlow()
+    private val _cityList: MutableStateFlow<SearchCityState> = MutableStateFlow(SearchCityState())
+    val cityListState = _cityList.asStateFlow()
 
     fun searchCityByName(cityName: String) {
         viewModelScope.launch(dispatcher) {
+            _cityList.update { it.copy(isLoading = true) }
             getCityByNameUseCase.invoke(cityName).also { data ->
-                _cityList.update { data }
+                _cityList.update { it.copy(cityList = data, isLoading = false) }
             }
         }
     }

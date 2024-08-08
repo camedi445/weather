@@ -18,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import co.cmedina.weather.ui.theme.WeatherTheme
 
 @Composable
-fun CityDate() {
+fun CityDate(
+    localtime: String
+) {
     Card(
         modifier = Modifier.size(width = 200.dp, height = 52.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -28,7 +30,7 @@ fun CityDate() {
         Box(Modifier.fillMaxSize()) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
-                text = "Miércoles, Agosto 7 2024",
+                text = localtime,
                 style = MaterialTheme.typography.labelMedium.copy(color = Color.Black)
             )
         }
@@ -40,7 +42,7 @@ fun CityDate() {
 fun CityDatePreview() {
     WeatherTheme {
         Box(modifier = Modifier.padding(24.dp)) {
-            CityDate()
+            CityDate("Miércoles, Agosto 7 2024")
         }
     }
 }

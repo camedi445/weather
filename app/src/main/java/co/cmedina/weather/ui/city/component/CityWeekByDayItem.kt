@@ -1,10 +1,8 @@
 package co.cmedina.weather.ui.city.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,15 +15,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import co.cmedina.weather.R
 import co.cmedina.weather.ui.theme.WeatherTheme
+import coil.compose.AsyncImage
 
 @Composable
-fun CityWeekByDayItem() {
+fun CityWeekByDayItem(
+    temperature: String,
+    condition: String,
+    iconUrl: String
+) {
     Card(
         modifier = Modifier
             .size(width = 96.dp, height = 156.dp),
@@ -41,20 +42,20 @@ fun CityWeekByDayItem() {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "23*",
+                    text = "${temperature}°",
                     style = MaterialTheme.typography.labelMedium,
                     textAlign = TextAlign.Center
                 )
-                Image(
+                AsyncImage(
+                    model = iconUrl ,
                     modifier = Modifier
                         .size(50.dp),
                     contentScale = ContentScale.Crop,
-                    painter = painterResource(id = R.drawable.cloud_mid_rain),
                     contentDescription = "" // todo add resource to the content desc
                 )
 
                 Text(
-                    text = "Mayormente nublado",
+                    text = condition,
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center
                 )
@@ -62,15 +63,4 @@ fun CityWeekByDayItem() {
         }
     }
 
-}
-
-
-@Composable
-@Preview(showBackground = true)
-fun CityWeekByDayItemPreview() {
-    WeatherTheme {
-        Box (modifier = Modifier.padding(24.dp)) {
-            CityWeekByDayItem()
-        }
-    }
 }

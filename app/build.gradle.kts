@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.gradle.plugin)
     alias(libs.plugins.kapt)
@@ -5,9 +7,17 @@ plugins {
     alias(libs.plugins.hilt.android)
 }
 
+val keystorePropertiesFile = rootProject.file("keys.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(keystorePropertiesFile.inputStream())
+
 android {
+
     namespace = "co.cmedina.weather"
     compileSdk = 34
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "co.cmedina.weather"
@@ -15,11 +25,11 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "API_KEY", keystoreProperties["API_KEY"] as String)
     }
 
     buildTypes {
@@ -60,6 +70,7 @@ dependencies {
     // compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.all)
+    implementation(libs.coil.compose)
 
     // testing
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -79,4 +90,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
+
+    // splash screen
+    implementation(libs.androidx.splash.screen)
 }

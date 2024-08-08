@@ -1,6 +1,5 @@
 package co.cmedina.weather.ui.city.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,16 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import co.cmedina.weather.R
 import co.cmedina.weather.ui.theme.WeatherTheme
+import coil.compose.AsyncImage
 
 @Composable
 fun CityTemperatureCard(
     temperature: String,
-    condition: String
+    condition: String,
+    imageUrl: String
 ) {
     Card(
         modifier = Modifier
@@ -53,12 +52,12 @@ fun CityTemperatureCard(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Image(
+                AsyncImage(
+                    model = imageUrl,
                     modifier = Modifier
                         .size(180.dp)
                         .offset(y = (-20).dp),
                     contentScale = ContentScale.Crop,
-                    painter = painterResource(id = R.drawable.cloud_mid_rain),
                     contentDescription = "" // todo add resource to the content desc
                 )
                 Column(
@@ -89,7 +88,8 @@ fun CityTemperatureCardPreview() {
         Box(modifier = Modifier.padding(24.dp)) {
             CityTemperatureCard(
                 temperature = "23",
-                condition = "mayormente nublado"
+                condition = "mayormente nublado",
+                imageUrl = "url"
             )
         }
     }
