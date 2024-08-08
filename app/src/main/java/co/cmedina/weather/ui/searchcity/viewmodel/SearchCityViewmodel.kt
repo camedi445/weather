@@ -3,6 +3,7 @@ package co.cmedina.weather.ui.searchcity.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.cmedina.weather.di.IODispatcher
+import co.cmedina.weather.domain.model.City
 import co.cmedina.weather.domain.usecase.GetCityByNameUseCase
 import co.cmedina.weather.ui.searchcity.state.SearchCityState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,10 +26,19 @@ class SearchCityViewmodel @Inject constructor(
     fun searchCityByName(cityName: String) {
         viewModelScope.launch(dispatcher) {
             _cityList.update { it.copy(isLoading = true) }
-            getCityByNameUseCase.invoke(cityName).also { data ->
-                _cityList.update { it.copy(cityList = data, isLoading = false) }
-            }
+            getCityByNameUseCase.invoke(cityName).fold(
+                ifLeft = { messageException: Throwable ->
+                    _cityList.update {
+                        it.copy(
+                            isLoading = false,
+                            error = messageException.message
+                        )
+                    }
+                },
+                ifRight = { cityListInfo: List<City> ->
+                    _cityList.update { it.copy(cityList = cityListInfo, isLoading = false) }
+                }
+            )
         }
     }
-
 }

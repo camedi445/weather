@@ -76,6 +76,9 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     testImplementation(libs.junit)
     androidTestImplementation(libs.bundles.ui.test.all)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.truth)
 
     // tools
     debugImplementation(libs.androidx.compose.ui.tooling)
@@ -93,4 +96,8 @@ dependencies {
 
     // splash screen
     implementation(libs.androidx.splash.screen)
+
+    // either
+    implementation(libs.arrow.core)
+    implementation(libs.arrow.fx.coroutines)
 }

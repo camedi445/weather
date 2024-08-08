@@ -26,10 +26,20 @@ class CityWeatherViewmodel @Inject constructor(
     fun getCityWeather(cityName: String) {
         _cityWeather.update { it.copy(isLoading = true) }
         viewModelScope.launch(dispatcher) {
-            getCityWeatherUseCase.invoke(cityName).also { data ->
-                _cityWeather.update { it.copy(isLoading = false, cityWeather = data) }
-            }
+            getCityWeatherUseCase.invoke(cityName).fold(
+                ifLeft = { messageException: Throwable ->
+                    _cityWeather.update {
+                        it.copy(
+                            isLoading = false,
+                            error = messageException.message
+                        )
+                    }
+                },
+                ifRight = { cityInfo: CityWeather ->
+                    _cityWeather.update { it.copy(isLoading = false, cityWeather = cityInfo) }
+                }
+            )
+
         }
     }
-
 }
