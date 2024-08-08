@@ -1,6 +1,7 @@
 package co.cmedina.weather.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -29,22 +30,32 @@ val Typography = Typography(
         fontFamily = Roboto,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
+        color = Color.White,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
     titleMedium = TextStyle(
         fontFamily = Roboto,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 28.sp
+        fontSize = 28.sp,
+        color = Color.White
     ),
     titleLarge = TextStyle(
         fontFamily = Roboto,
         fontWeight = FontWeight.Bold,
-        fontSize = 48.sp
+        fontSize = 48.sp,
+        color = Color.White
     ),
     labelMedium = TextStyle(
         fontFamily = Roboto,
         fontWeight = FontWeight.Medium,
-        fontSize = 15.sp
+        fontSize = 15.sp,
+        color = Color.White
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Roboto,
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp,
+        color = Color.White
     ),
 )

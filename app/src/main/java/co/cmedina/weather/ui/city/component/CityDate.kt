@@ -29,7 +29,7 @@ fun CityDate() {
             Text(
                 modifier = Modifier.align(Alignment.Center),
                 text = "Miércoles, Agosto 7 2024",
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium.copy(color = Color.Black)
             )
         }
     }
